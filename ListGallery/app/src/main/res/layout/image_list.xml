@@ -6,7 +6,8 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:id="@+id/iv1" />
+        android:id="@+id/iv1"
+        />
 
     <TextView
         android:id="@+id/tv1"

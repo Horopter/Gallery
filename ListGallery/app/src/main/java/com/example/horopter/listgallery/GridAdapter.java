@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,11 @@ public class GridAdapter extends BaseAdapter {
     Context context;
     ArrayList<String> imageId;
     private static LayoutInflater inflater = null;
+    public static class Holder
+    {
+        public static ImageView img;
+        public static TextView tv;
+    }
     public GridAdapter(MainActivity mainActivity, ArrayList<String> imagesList, ArrayList<String> images) {
         result = imagesList;
         context = mainActivity;
@@ -52,11 +58,11 @@ public class GridAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View v = inflater.inflate(R.layout.image_list,null);
-        TextView tv = (TextView) v.findViewById(R.id.tv1);
-        ImageView img = (ImageView) v.findViewById(R.id.iv1);
-        tv.setText(imageId.get(position));
+        Holder.tv = (TextView) v.findViewById(R.id.tv1);
+        Holder.img = (ImageView) v.findViewById(R.id.iv1);
+        Holder.tv.setText(imageId.get(position));
         Bitmap bmp = BitmapFactory.decodeFile(result.get(position));
-        img.setImageBitmap(bmp);
+        Holder.img.setImageBitmap(bmp);
         return v;
     }
 }

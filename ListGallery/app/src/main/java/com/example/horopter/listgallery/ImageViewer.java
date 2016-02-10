@@ -35,4 +35,8 @@ public class ImageViewer extends AppCompatActivity
         Bitmap bmp = BitmapFactory.decodeFile(filepath.get(position));
         imageview.setImageBitmap(bmp);
     }
+    public void onStop()
+    {
+        super.onStop();
+    }
 }

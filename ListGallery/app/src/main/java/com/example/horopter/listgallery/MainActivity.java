@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity
         }
         else
         {
-            file = new String("/storage/sdcard1/Images");
+            file = "/storage/sdcard1/Images";//Environment.getExternalStorageDirectory().getAbsolutePath();
             listFile = new ArrayList<>();
-            Toast.makeText(this,String.valueOf(file),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,String.valueOf(file),Toast.LENGTH_LONG).show();
             Log.d("Santosh", String.valueOf(file));
         }
         listf(file,listFile);
@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity
         {
             if (file.isFile())
             {
+                //if(file.getName().endsWith(".jpg")||file.getName().endsWith(".jpeg")||file.getName().endsWith(".png")||file.getName().endsWith(".gif"))
                 files.add(file);
             }
             else if (file.isDirectory())
