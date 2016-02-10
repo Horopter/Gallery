@@ -1,6 +1,7 @@
 package com.example.horopter.listgallery;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import static android.support.v4.app.ActivityCompat.startActivity;
 
 /**
  * Created by Horopter on 2/7/2016.
@@ -29,15 +32,17 @@ public class GridAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getCount()
+    {
         if(result==null)
             return 0;
         return result.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return position;
+    public Object getItem(int position)
+    {
+        return result.get(position);
     }
 
     @Override
@@ -52,12 +57,6 @@ public class GridAdapter extends BaseAdapter {
         tv.setText(imageId.get(position));
         Bitmap bmp = BitmapFactory.decodeFile(result.get(position));
         img.setImageBitmap(bmp);
-        v.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, imageId.get(position), Toast.LENGTH_SHORT).show();
-            }
-        });
         return v;
     }
 }
