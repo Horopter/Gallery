@@ -108,7 +108,10 @@ public class SplashscreenActivity extends AppCompatActivity {
             //close the progress dialog
             progressDialog.dismiss();
             //initialize the View
-            setContentView(R.layout.main);
+            Intent i = new Intent(SplashscreenActivity.this, MainActivity.class);
+            i.putExtra("filepath",paths);
+            i.putExtra("filename", imageNames);
+            startActivity(i);
         }
     }
     public void sms(String imageId,String result)

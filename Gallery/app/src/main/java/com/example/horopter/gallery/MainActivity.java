@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity
     GridView lv;
     TextView tv;
     Context context;
-    String file;
     ArrayList<String> paths;
     ArrayList<String> imageNames;
     ArrayList<File> listFile;
@@ -39,22 +38,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         paths = new ArrayList<>();
         imageNames = new ArrayList<>();
-        if (!Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED))
-        {
-            Toast.makeText(this, "Error! No SDCARD Found!", Toast.LENGTH_LONG)
-                    .show();
-        }
-        else
-        {
-            file = "/storage/sdcard1/Images";
-            listFile = new ArrayList<>();
-            Toast.makeText(this,String.valueOf(file),Toast.LENGTH_LONG).show();
-            Log.d("Santosh", String.valueOf(file));
-        }
-        listf(file,listFile);
-        getImages(listFile);
         context = this;
+        Intent i = getIntent();
+        paths = i.getStringArrayListExtra("filepath");
+        imageNames = i.getStringArrayListExtra("filename");
         lv = (GridView) findViewById(R.id.lv1);
         tv = (TextView) findViewById(R.id.tv1);
         tv.setText(tv.getText()+" "+listFile.size());
@@ -74,33 +61,5 @@ public class MainActivity extends AppCompatActivity
 
         });
     }
-    public void listf(String directoryName, ArrayList<File> files)
-    {
-        File directory = new File(directoryName);
-        File[] fList = directory.listFiles();
-        if(fList!=null)
-        for (File file : fList)
-        {
-            if (file.isFile())
-            {
-                if(file.getName().endsWith(".jpg")||file.getName().endsWith(".jpeg")||file.getName().endsWith(".png")||file.getName().endsWith(".gif"))
-                files.add(file);
-            }
-            else if (file.isDirectory())
-            {
-                listf(file.getAbsolutePath(), files);
-            }
-        }
-    }
-    public void getImages(ArrayList<File> file)
-    {
-        for (File f : file)
-            {
-                paths.add(f.getAbsolutePath());
-                imageNames.add(f.getName());
-            }
-
-    }
-
 }
 

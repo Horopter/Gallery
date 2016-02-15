@@ -70,36 +70,8 @@ public class ScrollAdapter extends BaseAdapter {
         Holder.tv = (TextView) v.findViewById(R.id.tv1);
         Holder.img = (ImageView) v.findViewById(R.id.iv1);
         Holder.tv.setText(imageId.get(position));
-        Bitmap bmp;
-        if(!new File(f,"Thumb-"+imageId.get(position)).exists()) {
-            bmp = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(result.get(position)), 128, 128);
-            saveImageToExternalStorage(bmp,"Thumb-"+imageId.get(position));
-        }
-        else {
-            bmp = BitmapFactory.decodeFile(f + "/" + "Thumb-"+imageId.get(position));
-        }
+        Bitmap bmp= BitmapFactory.decodeFile(f + "/" + "Thumb-"+imageId.get(position));
         Holder.img.setImageBitmap(bmp);
         return v;
-    }
-    public boolean saveImageToExternalStorage(Bitmap image,String name) {
-        String fullPath = f;
-        try {
-            File dir = new File(fullPath);
-            if (!dir.exists()) {
-                dir.mkdirs();
-            }
-            OutputStream fOut = null;
-            File file = new File(fullPath,name);
-            file.createNewFile();
-            fOut = new FileOutputStream(file);
-            image.compress(Bitmap.CompressFormat.PNG, 100, fOut);
-            fOut.flush();
-            fOut.close();
-            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
-            return true;
-        } catch (Exception e) {
-            Log.e("saveToExternalStorage()", e.getMessage());
-            return false;
-        }
     }
 }
