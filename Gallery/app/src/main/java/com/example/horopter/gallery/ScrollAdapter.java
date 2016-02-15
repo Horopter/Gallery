@@ -5,7 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,9 @@ import android.widget.TextView;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import static android.support.v4.app.ActivityCompat.startActivity;
@@ -27,6 +32,7 @@ public class ScrollAdapter extends BaseAdapter {
     Context context;
     ArrayList<String> imageId;
     private static LayoutInflater inflater = null;
+    private String f;
     public static class Holder
     {
         public static ImageView img;
@@ -36,7 +42,8 @@ public class ScrollAdapter extends BaseAdapter {
         result = imagesList;
         context = mainActivity;
         imageId = images;
-        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = LayoutInflater.from(context);
+        f = "/storage/sdcard1/thumbs";
     }
 
     @Override
@@ -63,17 +70,36 @@ public class ScrollAdapter extends BaseAdapter {
         Holder.tv = (TextView) v.findViewById(R.id.tv1);
         Holder.img = (ImageView) v.findViewById(R.id.iv1);
         Holder.tv.setText(imageId.get(position));
-        /*Picasso.with(context)//Uri.fromFile(new File(result.get(position)))
-                .load(getImageUri(context, ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(result.get(position)), 128, 128))) // didn't work
-                .into(Holder.img);*/
-        Bitmap bmp = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(result.get(position)),128,128);
+        Bitmap bmp;
+        if(!new File(f,"Thumb-"+imageId.get(position)).exists()) {
+            bmp = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(result.get(position)), 128, 128);
+            saveImageToExternalStorage(bmp,"Thumb-"+imageId.get(position));
+        }
+        else {
+            bmp = BitmapFactory.decodeFile(f + "/" + "Thumb-"+imageId.get(position));
+        }
         Holder.img.setImageBitmap(bmp);
         return v;
     }
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
+    public boolean saveImageToExternalStorage(Bitmap image,String name) {
+        String fullPath = f;
+        try {
+            File dir = new File(fullPath);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            OutputStream fOut = null;
+            File file = new File(fullPath,name);
+            file.createNewFile();
+            fOut = new FileOutputStream(file);
+            image.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), file.getName(), file.getName());
+            return true;
+        } catch (Exception e) {
+            Log.e("saveToExternalStorage()", e.getMessage());
+            return false;
+        }
     }
 }

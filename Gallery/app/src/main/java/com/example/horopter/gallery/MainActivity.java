@@ -2,8 +2,12 @@ package com.example.horopter.gallery;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -13,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     ArrayList<String> paths;
     ArrayList<String> imageNames;
     ArrayList<File> listFile;
+    public static String f = "/storage/sdcard1/thumbs";
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -40,7 +47,7 @@ public class MainActivity extends AppCompatActivity
         }
         else
         {
-            file = "/storage/sdcard1/Images";//Environment.getExternalStorageDirectory().getAbsolutePath();
+            file = "/storage/sdcard1/Images";
             listFile = new ArrayList<>();
             Toast.makeText(this,String.valueOf(file),Toast.LENGTH_LONG).show();
             Log.d("Santosh", String.valueOf(file));
@@ -92,6 +99,8 @@ public class MainActivity extends AppCompatActivity
                 paths.add(f.getAbsolutePath());
                 imageNames.add(f.getName());
             }
+
     }
+
 }
 
