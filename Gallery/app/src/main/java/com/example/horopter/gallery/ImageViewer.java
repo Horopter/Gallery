@@ -24,7 +24,7 @@ public class ImageViewer extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_image);
-        Toast.makeText(this,"At least I got started",Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,"At least I got started",Toast.LENGTH_LONG).show();
         Intent i = getIntent();
         int position = i.getExtras().getInt("position");
         ArrayList<String> filepath = i.getStringArrayListExtra("filepath");
