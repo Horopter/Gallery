@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
         {
             file = "/storage/sdcard1/Images";//Environment.getExternalStorageDirectory().getAbsolutePath();
             listFile = new ArrayList<>();
-            Toast.makeText(this,String.valueOf(file),Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,String.valueOf(file),Toast.LENGTH_LONG).show();
             Log.d("Santosh", String.valueOf(file));
         }
         listf(file,listFile);
