@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -27,14 +29,12 @@ public class ImageViewer extends AppCompatActivity
         setContentView(R.layout.view_image);
         Toast.makeText(this,"At least I got started", Toast.LENGTH_LONG).show();
         Intent i = getIntent();
-        String filepath = i.getStringExtra("fN");
-        int index = filepath.lastIndexOf(File.separator);
-        String fileName = filepath.substring(index + 1);
+        String filepath = i.getExtras().getString("fN");
+        String fileName = new File(filepath).getName();
         text = (TextView) findViewById(R.id.tv1);
         text.setText(fileName);
         imageview = (ImageView) findViewById(R.id.iv1);
-        Bitmap bmp = BitmapFactory.decodeFile(filepath);
-        imageview.setImageBitmap(bmp);
+        Glide.with(getApplicationContext()).load(new File(filepath)).thumbnail(0.5f).into(imageview);
     }
     public void onStop()
     {

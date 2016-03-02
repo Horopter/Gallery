@@ -33,14 +33,25 @@ public class MainActivity extends AppCompatActivity {
         adp = new GridAdapter(fileList,this);
         rv.setAdapter(adp);
         fileNames = getNames();
-        ItemClickSupport.addTo(rv).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
+        /*ItemClickSupport.addTo(rv).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
                 Intent i = new Intent(getApplicationContext(),ImageViewer.class);
                 i.putExtra("fN",fileNames.get(position));
                 startActivity(i);
             }
-        });
+        });*/
+        /*rv.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        // TODO Handle item click
+                        Intent i = new Intent(getApplicationContext(),ImageViewer.class);
+                        i.putExtra("fN",fileNames.get(position));
+                        startActivity(i);
+                    }
+                })
+        );*/
+
     }
     public ArrayList<String> getNames()
     {
